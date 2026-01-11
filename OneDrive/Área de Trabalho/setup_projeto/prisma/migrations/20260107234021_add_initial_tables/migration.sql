@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "OrderStatus" AS ENUM ('PENDING', 'IN_PREPARATION', 'FINHED');
+CREATE TYPE "OrderStatus" AS ENUM ('PENDING', 'IN_PREPARATION', 'FINISHED');
 
 -- CreateEnum
 CREATE TYPE "consumptionMethod" AS ENUM ('TAKEAWAY', 'DINE_IN');
