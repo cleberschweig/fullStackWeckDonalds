@@ -5,6 +5,7 @@ import { ChevronDown, ChevronsLeftIcon, ScrollTextIcon } from "lucide-react";
 import { SearchParamsContext } from "next/dist/shared/lib/hooks-client-context.shared-runtime";
 import { notFound } from "next/navigation";
 import RestaurantHeader from "./components/header";
+import RestaurantCategories from "./components/categories";
 
 interface RestaurantMenuPage {
   params: Promise<{ slug: string }>;
@@ -24,13 +25,22 @@ const RestaurantMenuPage = async ({
   if (!isConsuptionMethodValid(consumptionMethod)) {
     return notFound();
   }
-  const restaurant = await db.restaurant.findUnique({ where: { slug } });
+  const restaurant = await db.restaurant.findUnique({
+    where: { slug },
+    include: {
+      menuCategories: {
+        include: { products: true },
+      },
+    },
+  });
+
   if (!restaurant) {
     return notFound();
   }
   return (
     <div>
       <RestaurantHeader restaurant={restaurant} />
+      <RestaurantCategories restaurant={restaurant} />
     </div>
   );
 };
